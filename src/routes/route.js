@@ -47,6 +47,69 @@ router.get('/students/:studentName', function(req, res) {
     //res.send({data: studentDetails})
     res.send('student data')
 })
+//**********************************************************************************88 */
+//ARRAY
+const movies = [
+  'The Shawshank Redemption',
+  'The Godfather',
+  'The Dark Knight',
+  '12 Angry Men',
+  'Schindlers List'
+]
+//1
+router.get('/GET/movies',function(req,res){
+  console.log("GET/movies API working")
+  res.send(movies)
+})
+//***************************************************************************************** */
+//2
 
+router.get('/GET/movies/:indexNumber',function(req,res){
+  console.log("GET/movies/indexNumber API working")
+  
+  const indexNumber =req.params.indexNumber
+  if(indexNumber>(movies.length-1)||indexNumber<0)//3condition check
+  res.send("Please enter a valid index number")
+  else res.send(movies[indexNumber])
+})
+//********************************************************************************************* */
+ //ARRAY 
+const moviesArray = [
+  {
+    "id": 1,
+    "name": "The Shining"
+  },
+  {
+    "id": 2,
+    "name": "Incendies"
+  },
+  {
+    "id": 3,
+    "name": "Rang de Basanti"
+  },
+  {
+    "id": 4,
+    "name": "Finding Nemo"
+  }
+]
+//4
+router.get('/GET/films',function(req,res){
+  console.log("GET/films API working")
+  res.send(moviesArray)
+})
 
+//***********************************************************************************8 */
+const lengthOfArray =moviesArray.length
+
+//5
+router.get('/GET/films/:filmId',function(req,res){
+  console.log("GET/films/filmsId API working")
+
+  const filmIdd =parseInt(req.params.filmId)
+  const Obj =moviesArray.find(element=>element.id ===filmIdd)
+  if(filmIdd>=lengthOfArray||filmIdd<0)
+  res.send("Movies with the Id that you have entered does not exist .Please enter valid Id.")
+  else 
+  res.send(Obj.name)
+})
 module.exports = router;
