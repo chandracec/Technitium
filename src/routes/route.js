@@ -4,112 +4,87 @@ const router = express.Router();
 const commonFile = require('./common')
 const myUnderscore = require('underscore')
 
-router.get('/test-me', function (req, res) {
-    res.send('This should be working!')
-});
+//*******************************************************************************************88 */
+///ASSIGN 1
 
-router.get('/test-you', function (req, res) {
-    console.log('The exported module is: ',commonFile)
-    commonFile.doSomething()
-    console.log('This is the constant I created', commonFile.name)
-    res.send('Hello there, welcome to this application!')
-});
-
-router.get('/test-underscore', function(req, res){
-    let result = myUnderscore.first([11,12,23,44,15], 4)
-    console.log('the result is',result)
-    res.send('done')
-})
-
-router.get('/cohorts', function (request, response){
-    // logic to get the cohorts from database
-    // logic tp get only the active cohorts
-    // logic to get only the cohort with a size than 50
-    // logic to get only the backend cohorts
-    response.send(['technetium','nobelium'])
-})
-
-router.get('/students', function(req, res){
-    // receive or access the query params in the code
-    // write a logic on these query params
-    // city, score
-    console.log(req.query)
-    let requestedCity = req.query.city
-    let sortField = req.query.sort
-    // logic to get students
-    res.send(["Sabiha","Neha","Akash","Sonali"])
-})
-
-router.get('/students/:studentName', function(req, res) {
-    console.log(req.params.studentName)
-    /// go to database and search for studentName student
-    // store the data found in this variable - studentDetails
-    //res.send({data: studentDetails})
-    res.send('student data')
-})
-//**********************************************************************************88 */
-//ARRAY
-const movies = [
-  'The Shawshank Redemption',
-  'The Godfather',
-  'The Dark Knight',
-  '12 Angry Men',
-  'Schindlers List'
-]
-//1
-router.get('/GET/movies',function(req,res){
-  console.log("GET/movies API working")
-  res.send(movies)
-})
-//***************************************************************************************** */
-//2
-
-router.get('/GET/movies/:indexNumber',function(req,res){
-  console.log("GET/movies/indexNumber API working")
+router.get("/sol1", function (req, res) {
   
-  const indexNumber =req.params.indexNumber
-  if(indexNumber>(movies.length-1)||indexNumber<0)//3condition check
-  res.send("Please enter a valid index number")
-  else res.send(movies[indexNumber])
-})
-//********************************************************************************************* */
- //ARRAY 
-const moviesArray = [
-  {
-    "id": 1,
-    "name": "The Shining"
-  },
-  {
-    "id": 2,
-    "name": "Incendies"
-  },
-  {
-    "id": 3,
-    "name": "Rang de Basanti"
-  },
-  {
-    "id": 4,
-    "name": "Finding Nemo"
+  let arr= [1,2,3,4,5,6,7,8,9,11]
+  let n =arr.length
+
+  let sum=(n+1)*(n+2)/2//sum of 1-N 
+  let sum2=0
+
+  for(let i=0;i<n;i++)//find sum of array number
+  sum2+=arr[i]
+
+  let missingNumber =sum-sum2
+
+  res.send(  { data: missingNumber }  );
+});
+
+//**************************************************************************************8 */
+//ASSIGN 2
+router.get("/sol2", function (req, res) {
+  
+  let arr= [33, 34, 35, 37, 38]
+  let x=arr[0]
+  let n =arr.length
+  let missingNumber
+
+  for(let i=0;i<n;i++)//
+  { if(arr[i]!=x){//checks if next element is in the same series as previous 
+    missingNumber=x//if not then send the number as missing number
+    res.send( { data: missingNumber  })
   }
-]
-//4
-router.get('/GET/films',function(req,res){
-  console.log("GET/films API working")
-  res.send(moviesArray)
+  ++x  
+  }
+
+});
+
+//**********************************************************************************************8 */
+let players =
+   [
+       {
+           "name": "manish",
+           "dob": "1/1/1995",
+           "gender": "male",
+           "city": "jalandhar",
+           "sports": [
+               "swimming"
+           ]
+       },
+       {
+           "name": "gopal",
+           "dob": "1/09/1995",
+           "gender": "male",
+           "city": "delhi",
+           "sports": [
+               "soccer"
+           ]
+       },
+       {
+           "name": "lokesh",
+           "dob": "1/1/1990",
+           "gender": "male",
+           "city": "mumbai",
+           "sports": [
+               "soccer"
+           ]
+       },
+   ]
+   router.post('/players', function (req, res) {
+
+  const newPlayer=req.body
+  
+  
+
+  if(players.find((element) =>element.name===newPlayer.name)==undefined)
+  players.push(newPlayer)
+  
+
+    res.send(  { data: players, status: true }  )
 })
 
-//***********************************************************************************8 */
-const lengthOfArray =moviesArray.length
 
-//5
-router.get('/GET/films/:filmId',function(req,res){
-  console.log("GET/films/filmsId API working")
-
-  const filmIdd =parseInt(req.params.filmId)
-  const Obj =moviesArray.find(element=>element.id ===filmIdd)
-  if(filmIdd>=lengthOfArray||filmIdd<0)
-  res.send("Movies with the Id that you have entered does not exist .Please enter valid Id.")
-  else 
-  res.send(Obj.name)
-})
-module.exports = router;
+module.exports =router
