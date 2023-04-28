@@ -12,7 +12,5 @@ const bookSchema =new mongoose.Schema({
     year : {
         type : Number,
     }
-    })
-
-const book = mongoose.model('Book', bookSchema);
-module.exports = book;
+    },{timestamps:true})
+    module.exports = mongoose.model('book', bookSchema)
