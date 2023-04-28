@@ -16,8 +16,8 @@ const getBookList= async function (req, res) {
 //****************************************************************8 **************************/
 
 const  getBooksInYear= async function (req, res) {
-    let yearIn =parseInt(req.body)
-    let allBookInYear= await book.find({year:{$eq:1800}})
+    let yearIn =parseInt(req.params.year)
+    let allBookInYear= await book.find({year:yearIn})
     res.send({msg: allBookInYear})
 }
 
@@ -26,9 +26,9 @@ const getParticularBooks = async function (req, res) {
     let bookQuery = req.body;
     let query1 = bookQuery[0];
     let prop = Object.keys(query1)[0];
-    console.log(prop);
+    //console.log(prop);
     let value = query1[prop];
-    console.log(value);
+    //console.log(value);
     let query = {};
     query[prop] = value;
     let allBook = await book.find(query);
@@ -38,7 +38,7 @@ const getParticularBooks = async function (req, res) {
 
 //**************************************************************************888***********888888*** */
 const  getXINRBooks= async function (req, res) {
-    let allBook= await book.find({ 'price.indianPrice': { $in: [100, 200, 500] }})
+    let allBook= await book.find({ 'price.indianPrice': { $in: ["100INR", "200INR", "500INR"] }})
  
     res.send({msg: allBook})
 }
@@ -46,7 +46,7 @@ const  getXINRBooks= async function (req, res) {
 
 const  getRandomBooks= async function (req, res) {
     let allBook= await book.find({$or: [
-        { 'totalPgaes': 500},
+        { 'totalPages': { $gt: 500 }},
         { 'stockAvailable': true }]})
     res.send({msg: allBook})
 }
