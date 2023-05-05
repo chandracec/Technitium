@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const middleware1 =require('../middleware/middleware1')
 
 const authorController= require("../controllers/authorController")
 const bookController= require("../controllers/bookController")
@@ -12,7 +13,7 @@ router.post("/createBook", bookController.createBook  )
 router.post("/createPublisher",publishcont.createPublisher)
  
 
-router.get('/authorDetails',bookController.getBooks)
+router.get('/authorDetails',middleware1,bookController.getBooks)
 
 
 router.put('/modifyData',bookController.modifyData)

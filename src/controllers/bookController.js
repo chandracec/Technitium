@@ -52,12 +52,10 @@ const modifyData = async function(req, res) {
     const pub =await publisherModel.find({name: { $in: ['Penguin', 'HarperCollins'] } }).select('_id:1')
     // console.log(pub)
     let var1=null
-    for (i of pub) {
-        var1 = await bookModel.updateMany({publisher_id:i._id},{$set:{ isHardCover: true }},{new:true})
-    }
+    for (i of pub)
+    var1 = await bookModel.updateMany({publisher_id:i._id},{$set:{ isHardCover: true }},{new:true})
 
 
-     
     const authorIds = await authorModel.find({ rating: { $gt: 3.5 } })
     .distinct('_id')
 
